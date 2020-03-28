@@ -1,0 +1,277 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Campo</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">&lt;empty package name&gt;</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Campo (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Campo</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (52/ 52)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;import java.util.Collections;
+<i>2</i>&nbsp;import java.util.LinkedList;
+<i>3</i>&nbsp;import java.util.List;
+<i>4</i>&nbsp;import java.util.Random;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;/**
+<i>7</i>&nbsp; * Representa uma grade retangular, onde cada posição
+<i>8</i>&nbsp; * pode conter somente um animal.
+<i>9</i>&nbsp; */
+<b class="fc"><i>10</i>&nbsp;public class Campo {</b>
+<b class="fc"><i>11</i>&nbsp;    private static final Random rand = Randomizador.getRandom();</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    private int profundidade, largura;
+<i>14</i>&nbsp;    private Object[][] campo;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Representa um campo com o tamanho requerido.
+<i>18</i>&nbsp;     *
+<i>19</i>&nbsp;     * @param profundidade profundidade do campo.
+<i>20</i>&nbsp;     * @param largura      largura do campo.
+<i>21</i>&nbsp;     */
+<b class="fc"><i>22</i>&nbsp;    public Campo(int profundidade, int largura) {</b>
+<b class="fc"><i>23</i>&nbsp;        this.profundidade = profundidade;</b>
+<b class="fc"><i>24</i>&nbsp;        this.largura = largura;</b>
+<b class="fc"><i>25</i>&nbsp;        campo = new Object[profundidade][largura];</b>
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Esvazia o campo.
+<i>30</i>&nbsp;     */
+<i>31</i>&nbsp;    public void limpa() {
+<b class="fc"><i>32</i>&nbsp;        for (int linha = 0; linha &lt; profundidade; linha++) {</b>
+<b class="fc"><i>33</i>&nbsp;            for (int coluna = 0; coluna &lt; largura; coluna++) {</b>
+<b class="fc"><i>34</i>&nbsp;                campo[linha][coluna] = null;</b>
+<i>35</i>&nbsp;            }
+<i>36</i>&nbsp;        }
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * Limpa somente a localização dada.
+<i>41</i>&nbsp;     *
+<i>42</i>&nbsp;     * @param localizacao a localização que deve ser limpa.
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    public void limpa(Localizacao localizacao) {
+<b class="fc"><i>45</i>&nbsp;        campo[localizacao.getLinha()][localizacao.getColuna()] = null;</b>
+<b class="fc"><i>46</i>&nbsp;    }</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Adiciona um animal na posição requerida.
+<i>50</i>&nbsp;     * Se já houver um animal em tal posição, então o mesmo não é adicionado.
+<i>51</i>&nbsp;     *
+<i>52</i>&nbsp;     * @param animal animal que vai ser adicionado no campo.
+<i>53</i>&nbsp;     * @param linha  coordenada do campo.
+<i>54</i>&nbsp;     * @param coluna coordenada do campo.
+<i>55</i>&nbsp;     * @throws ObjetoInvalidoException
+<i>56</i>&nbsp;     */
+<i>57</i>&nbsp;    public void lugar(Object animal, int linha, int coluna) throws ObjetoInvalidoException {
+<b class="fc"><i>58</i>&nbsp;        if (!(animal instanceof iAnimal)) {</b>
+<b class="fc"><i>59</i>&nbsp;            throw new ObjetoInvalidoException(&quot;O objeto passado no argumento não consiste em um animal válido!&quot;);</b>
+<i>60</i>&nbsp;        }
+<b class="fc"><i>61</i>&nbsp;        lugar(animal, new Localizacao(linha, coluna));</b>
+<b class="fc"><i>62</i>&nbsp;    }</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * Adiciona um animal na posição requerida.
+<i>66</i>&nbsp;     * Se já houver um animal em tal posição, então o mesmo não é adicionado.
+<i>67</i>&nbsp;     *
+<i>68</i>&nbsp;     * @param animal      animal que vai ser adicionado no campo.
+<i>69</i>&nbsp;     * @param localizacao localização para adicionar o animal.
+<i>70</i>&nbsp;     * @throws ObjetoInvalidoException
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    public void lugar(Object animal, Localizacao localizacao) throws ObjetoInvalidoException {
+<b class="fc"><i>73</i>&nbsp;        if (!(animal instanceof iAnimal)) {</b>
+<b class="fc"><i>74</i>&nbsp;            throw new ObjetoInvalidoException(&quot;O objeto passado no argumento não consiste em um animal válido!&quot;);</b>
+<i>75</i>&nbsp;        }
+<b class="fc"><i>76</i>&nbsp;        campo[localizacao.getLinha()][localizacao.getColuna()] = animal;</b>
+<b class="fc"><i>77</i>&nbsp;    }</b>
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    /**
+<i>80</i>&nbsp;     * Se houver um animal em tal posição, o método retorna ele.
+<i>81</i>&nbsp;     *
+<i>82</i>&nbsp;     * @param localizacao localização do campo.
+<i>83</i>&nbsp;     * @return o animal que estiver na posição, ou null caso não possua nenhum animal naquela posição.
+<i>84</i>&nbsp;     */
+<i>85</i>&nbsp;    public Object pegarAnimalNaPosicao(Localizacao localizacao) {
+<b class="fc"><i>86</i>&nbsp;        return pegarAnimalNaPosicao(localizacao.getLinha(), localizacao.getColuna());</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    /**
+<i>90</i>&nbsp;     * Se houver um animal em tal posição, o método retorna ele.
+<i>91</i>&nbsp;     *
+<i>92</i>&nbsp;     * @param linha  linha requerida.
+<i>93</i>&nbsp;     * @param coluna coluna requerida.
+<i>94</i>&nbsp;     * @return o animal que estiver na posição, ou null caso não possua nenhum animal naquela posição.
+<i>95</i>&nbsp;     */
+<i>96</i>&nbsp;    public Object pegarAnimalNaPosicao(int linha, int coluna) {
+<b class="fc"><i>97</i>&nbsp;        return campo[linha][coluna];</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    /**
+<i>101</i>&nbsp;     * Gera uma localização aleatória que é adjacente a localização requerida
+<i>102</i>&nbsp;     * ou a mesma localização.
+<i>103</i>&nbsp;     * A localização retornada estará entre os limites do campo.
+<i>104</i>&nbsp;     *
+<i>105</i>&nbsp;     * @param localizacao localização onde gerará a sua adjacente.
+<i>106</i>&nbsp;     * @return uma localização válida entre a grade do campo.
+<i>107</i>&nbsp;     */
+<i>108</i>&nbsp;    public Localizacao localizacaoAdjacenteRandomica(Localizacao localizacao) {
+<b class="fc"><i>109</i>&nbsp;        List&lt;Localizacao&gt; adjacent = localizacoesAdjacentes(localizacao);</b>
+<b class="fc"><i>110</i>&nbsp;        return adjacent.get(0);</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    /**
+<i>114</i>&nbsp;     * Obtém uma lista aleatória de localizações adjancentes livres.
+<i>115</i>&nbsp;     *
+<i>116</i>&nbsp;     * @param localizacao obtém a localização adjancente a essa.
+<i>117</i>&nbsp;     * @return uma lista de localizações adjacentes livres.
+<i>118</i>&nbsp;     */
+<i>119</i>&nbsp;    public List&lt;Localizacao&gt; localizacoesAdjacentesLivres(Localizacao localizacao) {
+<b class="fc"><i>120</i>&nbsp;        List&lt;Localizacao&gt; livre = new LinkedList&lt;Localizacao&gt;();</b>
+<b class="fc"><i>121</i>&nbsp;        List&lt;Localizacao&gt; adjacente = localizacoesAdjacentes(localizacao);</b>
+<b class="fc"><i>122</i>&nbsp;        for (Localizacao proximo : adjacente) {</b>
+<b class="fc"><i>123</i>&nbsp;            if (pegarAnimalNaPosicao(proximo) == null) {</b>
+<b class="fc"><i>124</i>&nbsp;                livre.add(proximo);</b>
+<i>125</i>&nbsp;            }
+<b class="fc"><i>126</i>&nbsp;        }</b>
+<b class="fc"><i>127</i>&nbsp;        return livre;</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    /**
+<i>131</i>&nbsp;     * Tenta encontrar uma localização livre que seja adjacente a localização
+<i>132</i>&nbsp;     * requerida (caso não houver localização livre, retorna null).
+<i>133</i>&nbsp;     * A localização retorna estará entre os limites do campo.
+<i>134</i>&nbsp;     *
+<i>135</i>&nbsp;     * @param localizacao localização onde gerará a sua adjacente.
+<i>136</i>&nbsp;     * @return uma localização válida entre a grade do campo.
+<i>137</i>&nbsp;     */
+<i>138</i>&nbsp;    public Localizacao localizacaoAdjacenteLivre(Localizacao localizacao) {
+<b class="fc"><i>139</i>&nbsp;        List&lt;Localizacao&gt; livre = localizacoesAdjacentesLivres(localizacao);</b>
+<b class="fc"><i>140</i>&nbsp;        if (livre.size() &gt; 0) {</b>
+<b class="fc"><i>141</i>&nbsp;            return livre.get(0);</b>
+<i>142</i>&nbsp;        } else {
+<b class="fc"><i>143</i>&nbsp;            return null;</b>
+<i>144</i>&nbsp;        }
+<i>145</i>&nbsp;    }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;    /**
+<i>148</i>&nbsp;     * Retorna uma lista de localizações adjacentes a localização requerida.
+<i>149</i>&nbsp;     * A lista não incluirá o próprio local.
+<i>150</i>&nbsp;     * Todos os locais estarão dentro da grade do campo.
+<i>151</i>&nbsp;     *
+<i>152</i>&nbsp;     * @param localizacao a localização de onde serão geradas suas adjacentes.
+<i>153</i>&nbsp;     * @return uma lista de localizações adjacentes a dada.
+<i>154</i>&nbsp;     */
+<i>155</i>&nbsp;    public List&lt;Localizacao&gt; localizacoesAdjacentes(Localizacao localizacao) {
+<b class="fc"><i>156</i>&nbsp;        assert localizacao != null : &quot;Null localizacao passed to adjacentLocalizacoes&quot;;</b>
+<b class="fc"><i>157</i>&nbsp;        List&lt;Localizacao&gt; localizacoes = new LinkedList&lt;Localizacao&gt;();</b>
+<b class="fc"><i>158</i>&nbsp;        if (localizacao != null) {</b>
+<b class="fc"><i>159</i>&nbsp;            int linha = localizacao.getLinha();</b>
+<b class="fc"><i>160</i>&nbsp;            int coluna = localizacao.getColuna();</b>
+<b class="fc"><i>161</i>&nbsp;            for (int i = -1; i &lt;= 1; i++) {</b>
+<b class="fc"><i>162</i>&nbsp;                int proximaLinha = linha + i;</b>
+<b class="fc"><i>163</i>&nbsp;                if (proximaLinha &gt;= 0 &amp;&amp; proximaLinha &lt; profundidade) {</b>
+<b class="fc"><i>164</i>&nbsp;                    for (int j = -1; j &lt;= 1; j++) {</b>
+<b class="fc"><i>165</i>&nbsp;                        int proximaColuna = coluna + j;</b>
+<b class="fc"><i>166</i>&nbsp;                        if (proximaColuna &gt;= 0 &amp;&amp; proximaColuna &lt; largura &amp;&amp; (i != 0 || j != 0)) {</b>
+<b class="fc"><i>167</i>&nbsp;                            localizacoes.add(new Localizacao(proximaLinha, proximaColuna));</b>
+<i>168</i>&nbsp;                        }
+<i>169</i>&nbsp;                    }
+<i>170</i>&nbsp;                }
+<i>171</i>&nbsp;            }
+<b class="fc"><i>172</i>&nbsp;            Collections.shuffle(localizacoes, rand);</b>
+<i>173</i>&nbsp;        }
+<b class="fc"><i>174</i>&nbsp;        return localizacoes;</b>
+<i>175</i>&nbsp;    }
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;    /**
+<i>178</i>&nbsp;     * Retorna a profundidade do campo.
+<i>179</i>&nbsp;     *
+<i>180</i>&nbsp;     * @return profundidade do campo.
+<i>181</i>&nbsp;     */
+<i>182</i>&nbsp;    public int getProfundidade() {
+<b class="fc"><i>183</i>&nbsp;        return profundidade;</b>
+<i>184</i>&nbsp;    }
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;    /**
+<i>187</i>&nbsp;     * Retorna a largura do campo.
+<i>188</i>&nbsp;     *
+<i>189</i>&nbsp;     * @return a largura do campo.
+<i>190</i>&nbsp;     */
+<i>191</i>&nbsp;    public int getLargura() {
+<b class="fc"><i>192</i>&nbsp;        return largura;</b>
+<i>193</i>&nbsp;    }
+<i>194</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-09-21 20:40</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoboGuara</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">&lt;empty package name&gt;</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoboGuara (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoboGuara</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (53/ 53)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;import java.util.List;
+<i>2</i>&nbsp;import java.util.Iterator;
+<i>3</i>&nbsp;import java.util.Random;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Um simples modelo do comportamento de um predador (Lobo Guará).
+<i>7</i>&nbsp; * &lt;p&gt;
+<i>8</i>&nbsp; * Ilustração das simulações típicas entre predador e presa.
+<i>9</i>&nbsp; */
+<i>10</i>&nbsp;public class LoboGuara extends Animal implements iAnimal {
+<i>11</i>&nbsp;    private static final int IDADE_PROCRIACAO = 10;
+<i>12</i>&nbsp;    private static final int IDADE_MAXIMA = 150;
+<i>13</i>&nbsp;    private static final double PROBABILIDADE_PROCRIACAO = 0.35;
+<i>14</i>&nbsp;    private static final int TAMANHO_MAXIMO_NINHADA = 5;
+<i>15</i>&nbsp;    private static final int VALOR_FOME_OVELHA = 7;
+<b class="fc"><i>16</i>&nbsp;    private static final Random rand = Randomizador.getRandom();</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    private int idade;
+<i>19</i>&nbsp;    private int nivelFome;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Método que cria um lobo.
+<i>23</i>&nbsp;     * &lt;p&gt;
+<i>24</i>&nbsp;     * Este método permite que um lobo possa ser criado recém nascido e sem fome, ou com uma idade aleatória e com um
+<i>25</i>&nbsp;     * nível de fome.
+<i>26</i>&nbsp;     *
+<i>27</i>&nbsp;     * @param idadeRandomica Se esta cláusula for verdadeira, o lobo terá uma idade aleatória e um nível de fome.
+<i>28</i>&nbsp;     * @param campo          o campo ocupado pelo animal.
+<i>29</i>&nbsp;     * @param localizacao    a localização do campo.
+<i>30</i>&nbsp;     */
+<i>31</i>&nbsp;    public LoboGuara(boolean idadeRandomica, Campo campo, Localizacao localizacao) {
+<b class="fc"><i>32</i>&nbsp;        super(localizacao, campo);</b>
+<b class="fc"><i>33</i>&nbsp;        idade = 0;</b>
+<b class="fc"><i>34</i>&nbsp;        setLocalizacao(localizacao);</b>
+<b class="fc"><i>35</i>&nbsp;        if (idadeRandomica) {</b>
+<b class="fc"><i>36</i>&nbsp;            idade = rand.nextInt(IDADE_MAXIMA);</b>
+<b class="fc"><i>37</i>&nbsp;            nivelFome = rand.nextInt(VALOR_FOME_OVELHA);</b>
+<i>38</i>&nbsp;        } else {
+<b class="fc"><i>39</i>&nbsp;            nivelFome = VALOR_FOME_OVELHA;</b>
+<i>40</i>&nbsp;        }
+<b class="fc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Este método demonstra o que o lobo tem o intuito de fazer: caçar.
+<i>45</i>&nbsp;     * Neste método, a cada caça feita, é incrementada a idade e a fome do lobo.
+<i>46</i>&nbsp;     * Durante todo o processo, o lobo pode morrer de fome, morrer de velho ou dar a luz.
+<i>47</i>&nbsp;     *
+<i>48</i>&nbsp;     * @param novosLobos esta é a lista que armazena todos os lobos recém-nascidos.
+<i>49</i>&nbsp;     */
+<i>50</i>&nbsp;    public void corre(List&lt;Animal&gt; novosLobos) {
+<b class="fc"><i>51</i>&nbsp;        this.incrementaIdade();</b>
+<b class="fc"><i>52</i>&nbsp;        this.incrementaFome();</b>
+<b class="fc"><i>53</i>&nbsp;        if (estaVivo()) {</b>
+<b class="fc"><i>54</i>&nbsp;            daALuz(novosLobos);</b>
+<b class="fc"><i>55</i>&nbsp;            Localizacao newLocalizacao = procuraComida(getLocalizacao());</b>
+<b class="fc"><i>56</i>&nbsp;            if (newLocalizacao == null) {</b>
+<b class="fc"><i>57</i>&nbsp;                newLocalizacao = getCampo().localizacaoAdjacenteLivre(getLocalizacao());</b>
+<i>58</i>&nbsp;            }
+<b class="fc"><i>59</i>&nbsp;            if (newLocalizacao != null) {</b>
+<b class="fc"><i>60</i>&nbsp;                setLocalizacao(newLocalizacao);</b>
+<i>61</i>&nbsp;            } else {
+<b class="fc"><i>62</i>&nbsp;                setMorte();</b>
+<i>63</i>&nbsp;            }
+<i>64</i>&nbsp;        }
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * Este método é utilizado para incrementar a idade do lobo.
+<i>70</i>&nbsp;     * O mesmo pode morrer, dependendo de sua idade.
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    private void incrementaIdade() {
+<b class="fc"><i>73</i>&nbsp;        idade++;</b>
+<b class="fc"><i>74</i>&nbsp;        if (idade &gt; IDADE_MAXIMA) {</b>
+<b class="fc"><i>75</i>&nbsp;            setMorte();</b>
+<i>76</i>&nbsp;        }
+<b class="fc"><i>77</i>&nbsp;    }</b>
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    /**
+<i>80</i>&nbsp;     * Este método incrementa a fome do lobo.
+<i>81</i>&nbsp;     * O mesmo pode morrer, dependendo do seu nível de fome.
+<i>82</i>&nbsp;     */
+<i>83</i>&nbsp;    private void incrementaFome() {
+<b class="fc"><i>84</i>&nbsp;        nivelFome--;</b>
+<b class="fc"><i>85</i>&nbsp;        if (nivelFome == 0) {</b>
+<b class="fc"><i>86</i>&nbsp;            setMorte();</b>
+<i>87</i>&nbsp;        }
+<b class="fc"><i>88</i>&nbsp;    }</b>
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    /**
+<i>91</i>&nbsp;     * Este método avisa ao lobo quando há ovelhas adjacentes a ele.
+<i>92</i>&nbsp;     * A primeira ovelha que estiver viva será comida.
+<i>93</i>&nbsp;     *
+<i>94</i>&nbsp;     * @param localizacao qual é a localização no campo.
+<i>95</i>&nbsp;     * @return a localização de onde a ovelha foi encontrada ou null caso nenhuma ovelha for encontrada.
+<i>96</i>&nbsp;     */
+<i>97</i>&nbsp;    private Localizacao procuraComida(Localizacao localizacao) {
+<b class="fc"><i>98</i>&nbsp;        List&lt;Localizacao&gt; adjacente = getCampo().localizacoesAdjacentes(localizacao);</b>
+<b class="fc"><i>99</i>&nbsp;        Iterator&lt;Localizacao&gt; it = adjacente.iterator();</b>
+<b class="fc"><i>100</i>&nbsp;        while (it.hasNext()) {</b>
+<b class="fc"><i>101</i>&nbsp;            Localizacao onde = it.next();</b>
+<b class="fc"><i>102</i>&nbsp;            Object animal = getCampo().pegarAnimalNaPosicao(onde);</b>
+<b class="fc"><i>103</i>&nbsp;            if (animal instanceof Ovelha) {</b>
+<b class="fc"><i>104</i>&nbsp;                Ovelha ovelha = (Ovelha) animal;</b>
+<b class="fc"><i>105</i>&nbsp;                ovelha.setMorte();</b>
+<b class="fc"><i>106</i>&nbsp;                nivelFome = VALOR_FOME_OVELHA;</b>
+<b class="fc"><i>107</i>&nbsp;                return onde;</b>
+<i>108</i>&nbsp;            }
+<b class="fc"><i>109</i>&nbsp;        }</b>
+<b class="fc"><i>110</i>&nbsp;        return null;</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    /**
+<i>114</i>&nbsp;     * Este método verifica se o lobo deve ou não dar a luz.
+<i>115</i>&nbsp;     * As novas crias serão colocadas nas localizações adjacentes.
+<i>116</i>&nbsp;     *
+<i>117</i>&nbsp;     * @param novosLobos lista utilizada para o armazenamento dos lobos recém-nascidos.
+<i>118</i>&nbsp;     */
+<i>119</i>&nbsp;    private void daALuz(List&lt;Animal&gt; novosLobos) {
+<b class="fc"><i>120</i>&nbsp;        List&lt;Localizacao&gt; livre = getCampo().localizacoesAdjacentesLivres(getLocalizacao());</b>
+<b class="fc"><i>121</i>&nbsp;        int nascimentos = procria();</b>
+<b class="fc"><i>122</i>&nbsp;        for (int b = 0; b &lt; nascimentos; b++) {</b>
+<b class="fc"><i>123</i>&nbsp;            if (livre.size() &gt; 0) {</b>
+<b class="fc"><i>124</i>&nbsp;                Localizacao loc = livre.remove(0);</b>
+<b class="fc"><i>125</i>&nbsp;                LoboGuara jovem = new LoboGuara(false, getCampo(), loc);</b>
+<b class="fc"><i>126</i>&nbsp;                novosLobos.add(jovem);</b>
+<i>127</i>&nbsp;            }
+<i>128</i>&nbsp;        }
+<b class="fc"><i>129</i>&nbsp;    }</b>
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;    /**
+<i>132</i>&nbsp;     * Este método gera um número aleatório que representa o número de nascimento de lobos.
+<i>133</i>&nbsp;     * Além disso, também verifica se o lobo pode procriar ou não.
+<i>134</i>&nbsp;     *
+<i>135</i>&nbsp;     * @return o número de nascimentos.
+<i>136</i>&nbsp;     */
+<i>137</i>&nbsp;    protected int procria() {
+<b class="fc"><i>138</i>&nbsp;        int nascimentos = 0;</b>
+<b class="fc"><i>139</i>&nbsp;        if (podeProcriar() &amp;&amp; rand.nextDouble() &lt; PROBABILIDADE_PROCRIACAO) {</b>
+<b class="fc"><i>140</i>&nbsp;            nascimentos = rand.nextInt(TAMANHO_MAXIMO_NINHADA) + 1;</b>
+<i>141</i>&nbsp;        }
+<b class="fc"><i>142</i>&nbsp;        return nascimentos;</b>
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;
+<i>145</i>&nbsp;    /**
+<i>146</i>&nbsp;     * Este método verifica se um lobo pode procriar.
+<i>147</i>&nbsp;     * Depende da sua idade.
+<i>148</i>&nbsp;     *
+<i>149</i>&nbsp;     * @return
+<i>150</i>&nbsp;     */
+<i>151</i>&nbsp;    protected boolean podeProcriar() {
+<b class="fc"><i>152</i>&nbsp;        return idade &gt;= IDADE_PROCRIACAO;</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-09-21 20:40</div>
+</div>
+</body>
+</html>

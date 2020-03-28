@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Localizacao</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">&lt;empty package name&gt;</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Localizacao (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Localizacao</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,9%
+  </span>
+  <span class="absValue">
+    (13/ 14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/**
+<i>2</i>&nbsp; * Esta classe representa a localização dentro do campo.
+<i>3</i>&nbsp; */
+<i>4</i>&nbsp;public class Localizacao
+<i>5</i>&nbsp;{
+<i>6</i>&nbsp;    private int linha;
+<i>7</i>&nbsp;    private int coluna;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    /**
+<i>10</i>&nbsp;     * Este método representa linha e coluna.
+<i>11</i>&nbsp;     * @param linha a linha do campo.
+<i>12</i>&nbsp;     * @param coluna a coluna do campo.
+<i>13</i>&nbsp;     */
+<i>14</i>&nbsp;    public Localizacao(int linha, int coluna)
+<b class="fc"><i>15</i>&nbsp;    {</b>
+<b class="fc"><i>16</i>&nbsp;        if (linha &lt; 0 || coluna &lt; 0) {</b>
+<b class="fc"><i>17</i>&nbsp;            throw new IllegalArgumentException(&quot;A Localização não pode receber valores negativos!&quot;);</b>
+<i>18</i>&nbsp;        }
+<i>19</i>&nbsp;
+<b class="fc"><i>20</i>&nbsp;        this.linha = linha;</b>
+<b class="fc"><i>21</i>&nbsp;        this.coluna = coluna;</b>
+<b class="fc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * Este método implementa a igualdade das linhas e colunas.
+<i>26</i>&nbsp;     * @param obj
+<i>27</i>&nbsp;     * @return
+<i>28</i>&nbsp;     */
+<i>29</i>&nbsp;    public boolean equals(Object obj)
+<i>30</i>&nbsp;    {
+<b class="fc"><i>31</i>&nbsp;        if(obj instanceof Localizacao) {</b>
+<b class="fc"><i>32</i>&nbsp;        	Localizacao outra = (Localizacao) obj;</b>
+<b class="fc"><i>33</i>&nbsp;            return linha == outra.getLinha() &amp;&amp; coluna == outra.getColuna();</b>
+<i>34</i>&nbsp;        }
+<i>35</i>&nbsp;        else {
+<b class="nc"><i>36</i>&nbsp;            return false;</b>
+<i>37</i>&nbsp;        }
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    /**
+<i>41</i>&nbsp;     * Este método retorna uma string da representação da localização.
+<i>42</i>&nbsp;     * @return
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    public String toString()
+<i>45</i>&nbsp;    {
+<b class="fc"><i>46</i>&nbsp;        return linha + &quot;,&quot; + coluna;</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    /**
+<i>50</i>&nbsp;     * Este método retorna um hashcode para a localização.
+<i>51</i>&nbsp;     * @return
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public int hashCode()
+<i>54</i>&nbsp;    {
+<b class="fc"><i>55</i>&nbsp;        return (linha &lt;&lt; 16) + coluna;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * Este método retorna a linha.
+<i>60</i>&nbsp;     * @return
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    public int getLinha()
+<i>63</i>&nbsp;    {
+<b class="fc"><i>64</i>&nbsp;        return linha;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    /**
+<i>68</i>&nbsp;     * Este método retorna a coluna.
+<i>69</i>&nbsp;     * @return
+<i>70</i>&nbsp;     */
+<i>71</i>&nbsp;    public int getColuna()
+<i>72</i>&nbsp;    {
+<b class="fc"><i>73</i>&nbsp;        return coluna;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-09-21 20:40</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,196 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CampoEstatistica</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">&lt;empty package name&gt;</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CampoEstatistica (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CampoEstatistica</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (46/ 46)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;import java.util.HashMap;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Esta classe coleta e fornece dados estatisticos de um campo.
+<i>5</i>&nbsp; */
+<i>6</i>&nbsp;public class CampoEstatistica
+<i>7</i>&nbsp;{
+<i>8</i>&nbsp;    private HashMap&lt;Class, Contador&gt; contadores;
+<i>9</i>&nbsp;    private boolean contadoresValidos;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /**
+<i>12</i>&nbsp;     * Este método constrói um objeto do tipo CampoEstatistica.
+<i>13</i>&nbsp;     */
+<i>14</i>&nbsp;    public CampoEstatistica()
+<b class="fc"><i>15</i>&nbsp;    {</b>
+<b class="fc"><i>16</i>&nbsp;        contadores = new HashMap&lt;Class, Contador&gt;();</b>
+<b class="fc"><i>17</i>&nbsp;        contadoresValidos = true;</b>
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     *Este método captura os detalhes do que há no campo.
+<i>22</i>&nbsp;     * @param campo
+<i>23</i>&nbsp;     * @return uma string mostrando o que há no campo.
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    public String capturaDetalhesPolulacao(Campo campo)
+<i>26</i>&nbsp;    {
+<b class="fc"><i>27</i>&nbsp;        StringBuffer buffer = new StringBuffer();</b>
+<b class="fc"><i>28</i>&nbsp;        if(!contadoresValidos) {</b>
+<b class="fc"><i>29</i>&nbsp;            geraContadores(campo);</b>
+<i>30</i>&nbsp;        }
+<b class="fc"><i>31</i>&nbsp;        for(Class chave : contadores.keySet()) {</b>
+<b class="fc"><i>32</i>&nbsp;            Contador info = contadores.get(chave);</b>
+<b class="fc"><i>33</i>&nbsp;            buffer.append(info.getNome());</b>
+<b class="fc"><i>34</i>&nbsp;            buffer.append(&quot;: &quot;);</b>
+<b class="fc"><i>35</i>&nbsp;            buffer.append(info.getContador());</b>
+<b class="fc"><i>36</i>&nbsp;            buffer.append(&#39; &#39;);</b>
+<b class="fc"><i>37</i>&nbsp;        }</b>
+<b class="fc"><i>38</i>&nbsp;        return buffer.toString();</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    /**
+<i>42</i>&nbsp;     * Este método reseta todos os contadores para zero.
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    public void redefine()
+<i>45</i>&nbsp;    {
+<b class="fc"><i>46</i>&nbsp;        contadoresValidos = false;</b>
+<b class="fc"><i>47</i>&nbsp;        for(Class chave : contadores.keySet()) {</b>
+<b class="fc"><i>48</i>&nbsp;            Contador contador = contadores.get(chave);</b>
+<b class="fc"><i>49</i>&nbsp;            contador.reseta();</b>
+<b class="fc"><i>50</i>&nbsp;        }</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    /**
+<i>54</i>&nbsp;     * Incrementa o contador para uma classe de animal.
+<i>55</i>&nbsp;     * @param animalClass
+<i>56</i>&nbsp;     */
+<i>57</i>&nbsp;    public void incrementaContador(Class animalClass)
+<i>58</i>&nbsp;    {
+<b class="fc"><i>59</i>&nbsp;        Contador contador = contadores.get(animalClass);</b>
+<b class="fc"><i>60</i>&nbsp;        if(contador == null) {</b>
+<b class="fc"><i>61</i>&nbsp;            contador = new Contador(animalClass.getName());</b>
+<b class="fc"><i>62</i>&nbsp;            contadores.put(animalClass, contador);</b>
+<i>63</i>&nbsp;        }
+<b class="fc"><i>64</i>&nbsp;        contador.incrementa();</b>
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    /**
+<i>68</i>&nbsp;     * Este método mostra que o contador, para um tipo de animal, é finalizado.
+<i>69</i>&nbsp;     */
+<i>70</i>&nbsp;    public void contadorFinalizado()
+<i>71</i>&nbsp;    {
+<b class="fc"><i>72</i>&nbsp;        contadoresValidos = true;</b>
+<b class="fc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    /**
+<i>76</i>&nbsp;     * Este método indica se a simulação ainda é viável, isto é, se a mesma
+<i>77</i>&nbsp;     * deve parar ou continuar.
+<i>78</i>&nbsp;     * @param campo
+<i>79</i>&nbsp;     * @return true se existe mais de uma espécie viva.
+<i>80</i>&nbsp;     */
+<i>81</i>&nbsp;    public boolean ehViavel(Campo campo)
+<i>82</i>&nbsp;    {
+<b class="fc"><i>83</i>&nbsp;        int nonZero = 0;</b>
+<b class="fc"><i>84</i>&nbsp;        if(!contadoresValidos) {</b>
+<b class="fc"><i>85</i>&nbsp;            geraContadores(campo);</b>
+<i>86</i>&nbsp;        }
+<b class="fc"><i>87</i>&nbsp;        for(Class key : contadores.keySet()) {</b>
+<b class="fc"><i>88</i>&nbsp;            Contador info = contadores.get(key);</b>
+<b class="fc"><i>89</i>&nbsp;            if(info.getContador() &gt; 0) {</b>
+<b class="fc"><i>90</i>&nbsp;                nonZero++;</b>
+<i>91</i>&nbsp;            }
+<b class="fc"><i>92</i>&nbsp;        }</b>
+<b class="fc"><i>93</i>&nbsp;        return nonZero &gt; 1;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    /**
+<i>97</i>&nbsp;     * Este método gera o número de lobos e ovelhas existentes.
+<i>98</i>&nbsp;     * @param campo o campo a ser gerado os dados estatísticos.
+<i>99</i>&nbsp;     */
+<i>100</i>&nbsp;    private void geraContadores(Campo campo)
+<i>101</i>&nbsp;    {
+<b class="fc"><i>102</i>&nbsp;        redefine();</b>
+<b class="fc"><i>103</i>&nbsp;        for(int linha = 0; linha &lt; campo.getProfundidade(); linha++) {</b>
+<b class="fc"><i>104</i>&nbsp;            for(int coluna = 0; coluna &lt; campo.getLargura(); coluna++) {</b>
+<b class="fc"><i>105</i>&nbsp;                Object animal = campo.pegarAnimalNaPosicao(linha, coluna);</b>
+<b class="fc"><i>106</i>&nbsp;                if(animal != null) {</b>
+<b class="fc"><i>107</i>&nbsp;                    incrementaContador(animal.getClass());</b>
+<i>108</i>&nbsp;                }
+<i>109</i>&nbsp;            }
+<i>110</i>&nbsp;        }
+<b class="fc"><i>111</i>&nbsp;        contadoresValidos = true;</b>
+<b class="fc"><i>112</i>&nbsp;    }</b>
+<i>113</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-09-21 20:40</div>
+</div>
+</body>
+</html>
